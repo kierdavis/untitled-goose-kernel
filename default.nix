@@ -68,10 +68,13 @@ let things = rec {
   };
   binary = nixpkgs.stdenv.mkDerivation {
     name = "baremetaltest.bin";
-    nativeBuildInputs = [ cargo cargo-binutils rustc ];
-    phases = [ "buildPhase" ];
+    nativeBuildInputs = [ cargo cargo-binutils rustc nixpkgs.removeReferencesTo ];
+    phases = [ "buildPhase" "fixupPhase" ];
     buildPhase = ''
       cargo objcopy -- -I elf64-x86_64 -O binary --binary-architecture=i386:x86_64 ${bootloader}/bin/bootloader $out
+    '';
+    fixupPhase = ''
+      remove-references-to -t ${rustc} $out
     '';
   };
   run-vm = nixpkgs.writeShellScript "run-vm" ''
