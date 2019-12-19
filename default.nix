@@ -22,7 +22,7 @@ let things = rec {
     cargoPatches = [ ./cargo-binutils-Cargo-lock.patch ];
     cargoSha256 = "1jhyxlarm3pzawx2004w2cw39fk38q2hncsjps21lz4y144ppz2l";
   };
-  buildRustPackagex = args: let
+  crossBuildRustPackage = args: let
     args' = {
       cargoUpdateHook = ''
         echo '[dependencies.compiler_builtins]' >> Cargo.toml
@@ -45,13 +45,13 @@ let things = rec {
       '';
     });
   in deriv';
-  kernel = buildRustPackagex {
+  kernel = crossBuildRustPackage {
     pname = "kernel";
     version = "0.1";
     src = ./crate;
     cargoSha256 = "0ihl5a5ppb3rm4mwzfck23d1hmnnc6wgpmih5f5rqvd115jrys17";
   };
-  bootloader = buildRustPackagex rec {
+  bootloader = crossBuildRustPackage rec {
     pname = "bootloader";
     version = "0.8.2";
     src = nixpkgs.fetchFromGitHub {
