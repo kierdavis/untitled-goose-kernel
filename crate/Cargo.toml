@@ -1,5 +1,5 @@
 [package]
-name = "baremetaltest"
+name = "kernel"
 version = "0.1.0"
 authors = ["Kier Davis <kierdavis@gmail.com>"]
 edition = "2018"

@@ -46,13 +46,13 @@ let things = rec {
     });
   in deriv';
   kernel = buildRustPackagex {
-    pname = "baremetaltest-kernel";
+    pname = "kernel";
     version = "0.1";
     src = ./crate;
-    cargoSha256 = "19gs458nqwvazs9k42lbsnnqcplyb0ll5hrbdhb436l8zhzirgvd";
+    cargoSha256 = "0ihl5a5ppb3rm4mwzfck23d1hmnnc6wgpmih5f5rqvd115jrys17";
   };
   bootloader = buildRustPackagex rec {
-    pname = "baremetaltest-bootloader";
+    pname = "bootloader";
     version = "0.8.2";
     src = nixpkgs.fetchFromGitHub {
       owner = "rust-osdev";
@@ -63,11 +63,11 @@ let things = rec {
     cargoSha256 = "0diyw5cs90j018gl4fkhziq0mv9wrh1hibzc41db1qv37m4q61lf";
     cargoBuildFlags = ["--features" "binary"];
     targetJson = "${src}/x86_64-bootloader.json";
-    KERNEL = "${kernel}/bin/baremetaltest";
+    KERNEL = "${kernel}/bin/kernel";
     KERNEL_MANIFEST = "${./crate/Cargo.toml}";
   };
-  binary = nixpkgs.stdenv.mkDerivation {
-    name = "baremetaltest.bin";
+  diskimage = nixpkgs.stdenv.mkDerivation {
+    name = "diskimage.bin";
     nativeBuildInputs = [ cargo cargo-binutils rustc nixpkgs.removeReferencesTo ];
     phases = [ "buildPhase" "fixupPhase" ];
     buildPhase = ''
@@ -80,7 +80,7 @@ let things = rec {
   run-vm = nixpkgs.writeShellScript "run-vm" ''
     disk=$(mktemp)
     trap "rm -f $disk" EXIT QUIT INT HUP
-    cp ${binary} $disk
+    cp ${diskimage} $disk
     ${nixpkgs.qemu}/bin/qemu-system-x86_64 -drive format=raw,file=$disk
   '';
 }; in things.run-vm // things
