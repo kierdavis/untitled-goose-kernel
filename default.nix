@@ -39,10 +39,6 @@ let things = rec {
       nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ cargo-xbuild ];
       doCheck = false;
       releaseDir = "target/${builtins.head (lib.splitString "." (baseNameOf targetJson))}/release";
-      installPhase = ''
-        ${oldAttrs.installPhase}
-        cp -r target $out/target
-      '';
     });
   in deriv';
   kernel = crossBuildRustPackage {
