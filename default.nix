@@ -64,7 +64,7 @@ let things = rec {
     cargoBuildFlags = ["--features" "binary"];
     targetJson = "${src}/x86_64-bootloader.json";
     KERNEL = "${kernel}/bin/kernel";
-    KERNEL_MANIFEST = "${./crate/Cargo.toml}";
+    KERNEL_MANIFEST = "${kernel.src}/Cargo.toml";
   };
   diskimage = nixpkgs.stdenv.mkDerivation {
     name = "diskimage.bin";
