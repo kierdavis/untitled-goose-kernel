@@ -3,14 +3,4 @@
 [[package]]
 name = "baremetaltest"
 version = "0.1.0"
-dependencies = [
- "compiler_builtins 0.1.21 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
-[[package]]
-name = "compiler_builtins"
-version = "0.1.21"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[metadata]
-"checksum compiler_builtins 0.1.21 (registry+https://github.com/rust-lang/crates.io-index)" = "d3c520d376a5b582ce93a7f881ba3fae1b72d9404aa9539af09d11e68b27e123"
