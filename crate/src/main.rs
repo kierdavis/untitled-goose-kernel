@@ -1,5 +1,6 @@
 #![no_std]
 #![no_main]
+#![feature(const_in_array_repeat_expressions)]
 
 use core::panic::PanicInfo;
 
