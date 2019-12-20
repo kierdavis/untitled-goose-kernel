@@ -9,7 +9,9 @@ fn show_demo_message() {
   }
 }
 
-fn my_actor_constructor() {
+fn console_actor_constructor() {}
+
+fn demo_app_actor_constructor() {
   show_demo_message()
 }
 
@@ -20,16 +22,22 @@ struct TooManyActorsError;
 struct ActorID(usize);
 
 #[derive(Debug)]
-struct ActorSpec; // we don't support different kinds of actor yet - they all do the same thing.
+enum ActorSpec {
+  Console,
+  DemoApp,
+}
 
 #[derive(Debug)]
-struct Actor;
+struct Actor(ActorSpec);
 impl Actor {
-  fn from_spec(_spec: ActorSpec) -> Self {
-    Actor
+  fn from_spec(spec: ActorSpec) -> Self {
+    Actor(spec)
   }
   fn execute_constructor(&self) {
-    my_actor_constructor()
+    match self.0 {
+      ActorSpec::Console => console_actor_constructor(),
+      ActorSpec::DemoApp => demo_app_actor_constructor(),
+    }
   }
 }
 
@@ -73,6 +81,6 @@ impl Kernel {
 
 pub fn main() -> ! {
   let mut kernel = Kernel::new();
-  kernel.spawn(ActorSpec).unwrap();
+  kernel.spawn(ActorSpec::DemoApp).unwrap();
   loop {}
 }
