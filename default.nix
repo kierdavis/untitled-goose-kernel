@@ -44,7 +44,7 @@ let things = rec {
   kernel = crossBuildRustPackage {
     pname = "kernel";
     version = "0.1";
-    src = ./crate;
+    src = nixpkgs.nix-gitignore.gitignoreSource []./crate;
     cargoSha256 = "0ihl5a5ppb3rm4mwzfck23d1hmnnc6wgpmih5f5rqvd115jrys17";
   };
   bootloader = crossBuildRustPackage rec {
