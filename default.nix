@@ -1,6 +1,6 @@
 let things = rec {
   nixpkgsSrc = fetchTarball https://github.com/NixOS/nixpkgs/archive/6003e2f765a544f28cf77ed8bc43f2ea650f7767.tar.gz;
-  mozillaOverlaySrc = fetchTarball https://github.com/kierdavis/nixpkgs-mozilla/archive/b5f2af80f16aa565cef33d059f27623d258fef67.tar.gz;
+  mozillaOverlaySrc = fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/9d08acc6e95a784cf7b9ba73ebcabe86dd24abc0.tar.gz;
   nixpkgs = import nixpkgsSrc {
     overlays = [ (import "${mozillaOverlaySrc}/rust-overlay.nix") ];
   };
