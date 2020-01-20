@@ -1,5 +1,5 @@
 fn show_demo_message() {
-  static HELLO: &[u8] = b"Hello, world!";
+  static HELLO: &[u8] = b"Hello, Honk!";
   let vga_buffer = 0xb8000 as *mut u8;
   for (i, &byte) in HELLO.iter().enumerate() {
     unsafe {
